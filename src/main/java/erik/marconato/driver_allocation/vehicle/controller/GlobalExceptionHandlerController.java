@@ -1,5 +1,6 @@
 package erik.marconato.driver_allocation.vehicle.controller;
 
+import erik.marconato.driver_allocation.vehicle.exception.FindAllVehiclesIsEmptyException;
 import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
 import org.hibernate.PropertyValueException;
 import org.springframework.http.HttpStatus;
@@ -18,5 +19,10 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler(PropertyValueException.class)
     public ResponseEntity<String> handlePropertyValueException (PropertyValueException propertyValueException){
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Por favor, preencha todos os campos.");
+    }
+
+    @ExceptionHandler(FindAllVehiclesIsEmptyException.class)
+    public ResponseEntity<String> findAllVehiclesIsEmptyException (FindAllVehiclesIsEmptyException findAllVehiclesIsEmptyException){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(findAllVehiclesIsEmptyException.getMessage());
     }
 }

@@ -2,12 +2,16 @@ package erik.marconato.driver_allocation.vehicle.service;
 
 import erik.marconato.driver_allocation.vehicle.dto.VehicleDto;
 import erik.marconato.driver_allocation.vehicle.entity.VehicleEntity;
+import erik.marconato.driver_allocation.vehicle.exception.FindAllVehiclesIsEmptyException;
 import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
 import erik.marconato.driver_allocation.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleService {
@@ -35,7 +39,21 @@ public class VehicleService {
             );
 
             return ResponseEntity.status(HttpStatus.CREATED).body(vehicleDto);
+    }
 
+    public List<VehicleDto> findAllVehicles (){
+        List<VehicleEntity> getAllVehicles = vehicleRepository.findAll();
 
+        if (getAllVehicles.isEmpty()){
+            throw new FindAllVehiclesIsEmptyException("Não há veículos cadastrados.");
+        }
+
+        return  getAllVehicles.stream().map(vehicleEntity ->
+                new VehicleDto(
+                vehicleEntity.getId(),
+                vehicleEntity.getPlate(),
+                vehicleEntity.getModel(),
+                vehicleEntity.getYear()
+        )).collect(Collectors.toList());
     }
 }
