@@ -3,6 +3,7 @@ package erik.marconato.driver_allocation.vehicle.service;
 import erik.marconato.driver_allocation.vehicle.dto.VehicleDto;
 import erik.marconato.driver_allocation.vehicle.entity.VehicleEntity;
 import erik.marconato.driver_allocation.vehicle.exception.FindAllVehiclesIsEmptyException;
+import erik.marconato.driver_allocation.vehicle.exception.FindByIdVehicleNotFoundException;
 import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
 import erik.marconato.driver_allocation.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,5 +57,18 @@ public class VehicleService {
                 vehicleEntity.getModel(),
                 vehicleEntity.getYear()
         )).collect(Collectors.toList());
+    }
+
+    public Optional<VehicleDto> findByIdVehicle (Long id){
+
+
+        return Optional.ofNullable(vehicleRepository.findById(id).map(vehicle ->
+                        new VehicleDto(
+                                vehicle.getId(),
+                                vehicle.getPlate(),
+                                vehicle.getModel(),
+                                vehicle.getYear()
+                        ))
+                .orElseThrow(() -> new FindByIdVehicleNotFoundException("Id não encontrado.")));
     }
 }

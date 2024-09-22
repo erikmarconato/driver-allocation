@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/veiculos")
@@ -25,5 +26,10 @@ public class VehicleController {
     @GetMapping
     public List<VehicleDto> findAllVehicles (){
         return vehicleService.findAllVehicles();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<VehicleDto> findByIdVehicle (@PathVariable Long id){
+        return vehicleService.findByIdVehicle(id);
     }
 }

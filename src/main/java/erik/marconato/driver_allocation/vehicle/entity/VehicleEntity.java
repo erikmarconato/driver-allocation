@@ -36,4 +36,8 @@ public class VehicleEntity {
         this.model = vehicle.model();
         this.year = vehicle.year();
     }
+
+    public VehicleEntity(Long id) {
+        this.id = getId();
+    }
 }
