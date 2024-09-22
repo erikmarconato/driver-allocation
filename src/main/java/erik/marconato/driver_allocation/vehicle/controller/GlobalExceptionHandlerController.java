@@ -1,5 +1,6 @@
 package erik.marconato.driver_allocation.vehicle.controller;
 
+import erik.marconato.driver_allocation.vehicle.exception.DeleteVehicleNotFoundException;
 import erik.marconato.driver_allocation.vehicle.exception.FindAllVehiclesIsEmptyException;
 import erik.marconato.driver_allocation.vehicle.exception.FindByIdVehicleNotFoundException;
 import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
@@ -24,11 +25,16 @@ public class GlobalExceptionHandlerController {
 
     @ExceptionHandler(FindAllVehiclesIsEmptyException.class)
     public ResponseEntity<String> findAllVehiclesIsEmptyException (FindAllVehiclesIsEmptyException findAllVehiclesIsEmptyException){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(findAllVehiclesIsEmptyException.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(findAllVehiclesIsEmptyException.getMessage());
     }
 
     @ExceptionHandler(FindByIdVehicleNotFoundException.class)
     public ResponseEntity<String> findByIdVehicleNotFoundException (FindByIdVehicleNotFoundException findByIdVehicleNotFoundException){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(findByIdVehicleNotFoundException.getMessage());
+    }
+
+    @ExceptionHandler(DeleteVehicleNotFoundException.class)
+    public ResponseEntity<String> deleteVehicleNotFoundException (DeleteVehicleNotFoundException deleteVehicleNotFoundException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(deleteVehicleNotFoundException.getMessage());
     }
 }

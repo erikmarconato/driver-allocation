@@ -2,6 +2,7 @@ package erik.marconato.driver_allocation.vehicle.service;
 
 import erik.marconato.driver_allocation.vehicle.dto.VehicleDto;
 import erik.marconato.driver_allocation.vehicle.entity.VehicleEntity;
+import erik.marconato.driver_allocation.vehicle.exception.DeleteVehicleNotFoundException;
 import erik.marconato.driver_allocation.vehicle.exception.FindAllVehiclesIsEmptyException;
 import erik.marconato.driver_allocation.vehicle.exception.FindByIdVehicleNotFoundException;
 import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
@@ -61,7 +62,6 @@ public class VehicleService {
 
     public Optional<VehicleDto> findByIdVehicle (Long id){
 
-
         return Optional.ofNullable(vehicleRepository.findById(id).map(vehicle ->
                         new VehicleDto(
                                 vehicle.getId(),
@@ -70,5 +70,16 @@ public class VehicleService {
                                 vehicle.getYear()
                         ))
                 .orElseThrow(() -> new FindByIdVehicleNotFoundException("Id não encontrado.")));
+    }
+
+    public String deleteVehicle (Long id){
+
+        var vehicleExists = vehicleRepository.findById(id);
+
+        if (vehicleExists.isPresent()){
+            vehicleRepository.deleteById(id);
+            return "Veículo deletado com sucesso.";
+        }
+        throw new DeleteVehicleNotFoundException("Veículo não encontrado. Por favor, verifique se o ID está correto");
     }
 }

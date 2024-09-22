@@ -32,4 +32,9 @@ public class VehicleController {
     public Optional<VehicleDto> findByIdVehicle (@PathVariable Long id){
         return vehicleService.findByIdVehicle(id);
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteVehicle (@PathVariable Long id){
+        return vehicleService.deleteVehicle(id);
+    }
 }
