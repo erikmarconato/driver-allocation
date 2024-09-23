@@ -13,7 +13,7 @@ public class GlobalExceptionHandlerController {
 
     @ExceptionHandler(PlateExistsException.class)
     public ResponseEntity<String> handlePlateExistsException (PlateExistsException plateExistsException){
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(plateExistsException.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(plateExistsException.getMessage());
     }
 
     @ExceptionHandler(PropertyValueException.class)
@@ -22,7 +22,7 @@ public class GlobalExceptionHandlerController {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> deleteVehicleNotFoundException (NotFoundException deleteVehicleNotFoundException){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(deleteVehicleNotFoundException.getMessage());
+    public ResponseEntity<String> notFoundException (NotFoundException notFoundException){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundException.getMessage());
     }
 }

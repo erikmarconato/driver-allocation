@@ -67,7 +67,7 @@ public class VehicleService {
                                 vehicle.getModel(),
                                 vehicle.getYear()
                         ))
-                .orElseThrow(() -> new NotFoundException("Id não encontrado.")));
+                .orElseThrow(() -> new NotFoundException("Veículo não encontrado com o ID em questão. Verifique o ID.")));
     }
 
     public String deleteVehicle (Long id){

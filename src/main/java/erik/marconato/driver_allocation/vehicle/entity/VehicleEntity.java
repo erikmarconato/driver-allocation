@@ -1,6 +1,7 @@
 package erik.marconato.driver_allocation.vehicle.entity;
 
 import erik.marconato.driver_allocation.vehicle.dto.VehicleDto;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
