@@ -2,8 +2,8 @@ package erik.marconato.driver_allocation.vehicle.service;
 
 import erik.marconato.driver_allocation.vehicle.dto.VehicleDto;
 import erik.marconato.driver_allocation.vehicle.entity.VehicleEntity;
-import erik.marconato.driver_allocation.vehicle.exception.NotFoundException;
-import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
+import erik.marconato.driver_allocation.exception.NotFoundException;
+import erik.marconato.driver_allocation.exception.PlateExistsException;
 import erik.marconato.driver_allocation.vehicle.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -78,7 +78,7 @@ public class VehicleService {
             vehicleRepository.deleteById(id);
             return "Veículo deletado com sucesso.";
         }
-        throw new NotFoundException("Veículo não encontrado. Por favor, verifique se o ID está correto");
+        throw new NotFoundException("Veículo não encontrado. Por favor, verifique se o ID está correto.");
     }
 
     public VehicleDto editVehicle (Long id, VehicleDto vehicleDto){
@@ -109,6 +109,6 @@ public class VehicleService {
             );
         }
 
-        throw new NotFoundException("Veículo não encontrado. Por favor, verifique se o ID está correto");
+        throw new NotFoundException("Veículo não encontrado. Por favor, verifique se o ID está correto.");
     }
 }

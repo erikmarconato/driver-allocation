@@ -1,7 +1,8 @@
-package erik.marconato.driver_allocation.vehicle.controller;
+package erik.marconato.driver_allocation.exception.ControllerAdvice;
 
-import erik.marconato.driver_allocation.vehicle.exception.NotFoundException;
-import erik.marconato.driver_allocation.vehicle.exception.PlateExistsException;
+import erik.marconato.driver_allocation.exception.CpfExistsException;
+import erik.marconato.driver_allocation.exception.NotFoundException;
+import erik.marconato.driver_allocation.exception.PlateExistsException;
 import org.hibernate.PropertyValueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,10 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> notFoundException (NotFoundException notFoundException){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundException.getMessage());
+    }
+
+    @ExceptionHandler(CpfExistsException.class)
+    public ResponseEntity<String> cpfExistsException (CpfExistsException cpfExistsException){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(cpfExistsException.getMessage());
     }
 }

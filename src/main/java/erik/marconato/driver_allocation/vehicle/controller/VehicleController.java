@@ -24,8 +24,8 @@ public class VehicleController {
     @Operation(summary = "Cria um novo veículo")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Veículo criado com sucesso."),
-            @ApiResponse(responseCode = "409", description = "Por favor, preencha todos os campos."),
             @ApiResponse(responseCode = "400", description = "Placa já está em uso no sistema. Por favor, escolha uma placa diferente."),
+            @ApiResponse(responseCode = "409", description = "Por favor, preencha todos os campos."),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor.")
     })
     @PostMapping
