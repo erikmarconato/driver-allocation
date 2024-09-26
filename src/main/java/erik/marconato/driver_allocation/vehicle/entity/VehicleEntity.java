@@ -1,7 +1,7 @@
 package erik.marconato.driver_allocation.vehicle.entity;
 
+import erik.marconato.driver_allocation.association.entity.AssociationEntity;
 import erik.marconato.driver_allocation.vehicle.dto.VehicleDto;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +28,8 @@ public class VehicleEntity {
     @Column(name = "ano", nullable = false)
     private Integer year;
 
+    @OneToOne(mappedBy = "vehicle")
+    AssociationEntity associationEntity;
 
     public VehicleEntity(VehicleDto vehicle) {
         this.id = vehicle.id();

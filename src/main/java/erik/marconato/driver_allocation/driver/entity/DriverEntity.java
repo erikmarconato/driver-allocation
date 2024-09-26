@@ -1,5 +1,6 @@
 package erik.marconato.driver_allocation.driver.entity;
 
+import erik.marconato.driver_allocation.association.entity.AssociationEntity;
 import erik.marconato.driver_allocation.driver.dto.DriverDto;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,10 @@ public class DriverEntity {
 
     @Column(name = "cnh", nullable = false)
     private String cnh;
+
+    @OneToOne(mappedBy = "driver")
+    AssociationEntity associationEntity;
+
 
     public DriverEntity(DriverDto driverDto) {
         this.id = driverDto.id();
