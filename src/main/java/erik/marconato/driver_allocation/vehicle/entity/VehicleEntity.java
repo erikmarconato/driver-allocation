@@ -38,4 +38,10 @@ public class VehicleEntity {
         this.year = vehicle.year();
     }
 
+    public VehicleEntity(long id, String plate, String model, int year) {
+        this.id = id;
+        this.plate = plate;
+        this.model = model;
+        this.year = year;
+    }
 }

@@ -85,9 +85,9 @@ public class VehicleService {
 
         var vehicleExists = vehicleRepository.findById(id);
 
-        VehicleEntity plateExists = (VehicleEntity) vehicleRepository.findByPlate(vehicleDto.plate());
-
         if (vehicleExists.isPresent()){
+
+            VehicleEntity plateExists = (VehicleEntity) vehicleRepository.findByPlate(vehicleDto.plate());
 
             if (plateExists != null && !plateExists.getId().equals(id)){
                 throw new PlateExistsException("Placa já está em uso no sistema. Por favor, escolha uma placa diferente.");
