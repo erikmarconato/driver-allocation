@@ -38,4 +38,11 @@ public class DriverEntity {
         this.cpf = driverDto.cpf();
         this.cnh = driverDto.cnh();
     }
+
+    public DriverEntity(Long id, String name, String cpf, String cnh) {
+        this.id = id;
+        this.name = name;
+        this.cpf = cpf;
+        this.cnh = cnh;
+    }
 }

@@ -84,9 +84,9 @@ public class DriverService {
 
         var driverExists = driverRepository.findById(id);
 
-        DriverEntity cpfExists = (DriverEntity) driverRepository.findByCpf(driverDto.cpf());
-
         if (driverExists.isPresent()){
+
+            DriverEntity cpfExists = (DriverEntity) driverRepository.findByCpf(driverDto.cpf());
 
             if (cpfExists != null && !cpfExists.getId().equals(id)){
                 throw new CpfExistsException("CPF já cadastrado no sistema. Por favor, utilize outro CPF.");

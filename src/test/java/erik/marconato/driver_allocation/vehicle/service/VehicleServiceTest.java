@@ -104,6 +104,8 @@ class VehicleServiceTest {
 
         Assertions.assertThrows(NotFoundException.class, () -> vehicleService.findAllVehicles(),
                 "Deve ser lançada a exceção (NotFoundException) se a lista estiver vazia.");
+
+        Mockito.verify(vehicleRepository, Mockito.times(1)).findAll();
     }
 
     @Test
@@ -114,6 +116,10 @@ class VehicleServiceTest {
         Mockito.when(vehicleRepository.findById(vehicleEntity.getId())).thenReturn(Optional.of(vehicleEntity));
 
         Optional<VehicleDto> response = vehicleService.findByIdVehicle(vehicleEntity.getId());
+
+        Mockito.verify(vehicleRepository, Mockito.times(1)).findById(vehicleEntity.getId());
+
+        Assertions.assertTrue(response.isPresent());
 
         Assertions.assertEquals(1L, response.get().id());
         Assertions.assertEquals("ABC-123", response.get().plate());
@@ -129,6 +135,8 @@ class VehicleServiceTest {
 
         Assertions.assertThrows(NotFoundException.class, () -> vehicleService.findByIdVehicle(idInvalid),
                 "Deve ser lançada a exceção (NotFoundException) se o ID não for encontrado.");
+
+        Mockito.verify(vehicleRepository, Mockito.times(1)).findById(idInvalid);
     }
 
     @Test
@@ -141,6 +149,7 @@ class VehicleServiceTest {
         String response = vehicleService.deleteVehicle(vehicleEntity.getId());
 
         Mockito.verify(vehicleRepository, Mockito.times(1)).deleteById(vehicleEntity.getId());
+        Mockito.verify(vehicleRepository, Mockito.times(1)).findById(Mockito.anyLong());
 
         Assertions.assertEquals("Veículo deletado com sucesso.", response);
     }
@@ -154,6 +163,7 @@ class VehicleServiceTest {
         Assertions.assertThrows(NotFoundException.class, () -> vehicleService.deleteVehicle(idInvalid),
                 "Deve ser lançada a exceção (NotFoundException) se o ID não for encontrado.");
 
+        Mockito.verify(vehicleRepository, Mockito.times(1)).findById(Mockito.anyLong());
         Mockito.verify(vehicleRepository, Mockito.never()).deleteById(Mockito.anyLong());
     }
 
@@ -225,7 +235,8 @@ class VehicleServiceTest {
         Mockito.when(vehicleRepository.findById(validID)).thenReturn(Optional.of(existingVehicle));
         Mockito.when(vehicleRepository.findByPlate(vehicleDtoEdit.plate())).thenReturn(anotherVehicle);
 
-        Assertions.assertThrows(PlateExistsException.class, () -> vehicleService.editVehicle(validID, vehicleDtoEdit));
+        Assertions.assertThrows(PlateExistsException.class, () -> vehicleService.editVehicle(validID, vehicleDtoEdit),
+                "Deve ser lançada a exceção (PlateExistsException) caso a placa já exista em um veículo com ID diferente.");
 
         Mockito.verify(vehicleRepository, Mockito.never()).save(Mockito.any(VehicleEntity.class));
     }
