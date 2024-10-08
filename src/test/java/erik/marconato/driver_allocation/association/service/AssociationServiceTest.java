@@ -391,7 +391,7 @@ class AssociationServiceTest {
         Mockito.when(associationRepository.findByVehicleId(associationEdit.vehicle())).thenReturn(new AssociationEntity());
 
         Assertions.assertThrows(AssociationDriverAndVehicleExistsException.class, () -> associationService.editAssociation(validId, associationEdit),
-                "Deve lançar a exceção (AssociationDriverAndVehicleExistsException) caso já exista associação existente no banco de dados com o ID do motorista informado.");
+                "Deve lançar a exceção (AssociationDriverAndVehicleExistsException) caso já exista associação existente no banco de dados com o ID do veículo informado.");
 
         Mockito.verify(associationRepository, Mockito.never()).save(Mockito.any(AssociationEntity.class));
     }
