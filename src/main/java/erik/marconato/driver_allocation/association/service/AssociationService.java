@@ -37,14 +37,14 @@ public class AssociationService {
         AssociationEntity findByDriverId = associationRepository.findByDriverId(associationDto.driver());
         AssociationEntity findByVehicleId = associationRepository.findByVehicleId(associationDto.vehicle());
 
+        if (findByDriverId != null || findByVehicleId != null){
+            throw new AssociationExistsException("Motorista ou Veículo já associado no banco de dados. Por favor, verifique os IDs.");
+        }
+
         Optional<DriverEntity> driver = Optional.ofNullable(driverRepository.findById(associationDto.driver())
                 .orElseThrow(() -> new NotFoundException("Motorista não encontrado. Por favor, verifique se o ID está correto.")));
         Optional<VehicleEntity> vehicle = Optional.ofNullable(vehicleRepository.findById(associationDto.vehicle())
                 .orElseThrow(() -> new NotFoundException("Veículo não encontrado. Por favor, verifique se o ID está correto.")));
-
-        if (findByDriverId != null || findByVehicleId != null){
-            throw new AssociationExistsException("Motorista ou Veículo já associado no banco de dados. Por favor, verifique os IDs.");
-        }
 
         DriverEntity driverEntityId = driver.get();
         VehicleEntity vehicleEntityId = vehicle.get();
@@ -105,14 +105,14 @@ public class AssociationService {
 
         Optional<AssociationEntity> associationExists = associationRepository.findById(id);
 
+        if (associationExists.isEmpty()){
+            throw new AssociationExistsException("Associação não encontrada. Por favor, verifique se o ID está correto.");
+        }
+
         DriverEntity driverEntity = driverRepository.findById(associationDto.driver())
                 .orElseThrow(() -> new NotFoundException("Motorista não encontrado. Por favor, verifique o ID."));
         VehicleEntity vehicleEntity = vehicleRepository.findById(associationDto.vehicle())
                 .orElseThrow(() -> new NotFoundException("Veículo não encontrado. Por favor, verifique o ID."));
-
-        if (associationExists.isEmpty()){
-            throw new AssociationExistsException("Associação não encontrada. Por favor, verifique se o ID está correto.");
-        }
 
         var driverExists = associationRepository.findByDriverId(associationDto.driver());
         var vehicleExists = associationRepository.findByVehicleId(associationDto.vehicle());
@@ -134,6 +134,5 @@ public class AssociationService {
                 association.getDriver().getId(),
                 association.getVehicle().getId()
         );
-
     }
 }
